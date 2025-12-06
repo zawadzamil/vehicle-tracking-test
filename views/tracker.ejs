@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Tracker</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1>Vehicle Tracking System</h1>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/simulator">Simulator</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="tracker-container">
+        <div class="tracker-sidebar">
+            <h2>My Tracking</h2>
+            <div id="vehicleInfo">
+                <p>Loading...</p>
+            </div>
+
+            <div class="location-status">
+                <h3>Current Location</h3>
+                <p id="currentLocation">Detecting...</p>
+                <button id="refreshLocation" class="btn-secondary">Refresh Location</button>
+            </div>
+
+            <div class="destination-form">
+                <h3>Destination</h3>
+                <p class="info-text">Click on the map to select your destination</p>
+                <div id="destinationInfo" style="display: none;">
+                    <p><strong>Destination:</strong> <span id="destName">Not set</span></p>
+                    <p><strong>Location:</strong> <span id="destCoords">-</span></p>
+                    <p><strong>Distance:</strong> <span id="distance">-</span></p>
+                    <button id="clearDestination" class="btn-danger">Clear Destination</button>
+                </div>
+            </div>
+
+            <div class="route-options">
+                <h3>Route</h3>
+                <label>
+                    <input type="checkbox" id="showRoute" checked>
+                    Show route path
+                </label>
+            </div>
+
+            <div class="tracking-stats">
+                <h3>Stats</h3>
+                <p>Speed: <span id="speed">0</span> km/h</p>
+                <p>Accuracy: <span id="accuracy">-</span> m</p>
+                <p>Last Update: <span id="lastUpdate">Never</span></p>
+                <p>Status: <span id="trackingStatus">Initializing...</span></p>
+            </div>
+        </div>
+
+        <div class="map-container">
+            <div id="map"></div>
+            <div id="mapInstructions" class="map-overlay">
+                Click anywhere on the map to set your destination
+            </div>
+        </div>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/tracker.js"></script>
+</body>
+</html>

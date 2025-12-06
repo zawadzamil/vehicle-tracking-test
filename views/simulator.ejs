@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Simulator</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1>Vehicle Tracking System</h1>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/simulator" class="active">Simulator</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="tracker-container">
+        <div class="tracker-sidebar">
+            <h2>Vehicle Simulator</h2>
+            <p class="info-text">Simulate vehicle movement by clicking on the map</p>
+
+            <div class="simulator-controls">
+                <label for="vehicleSelect">Select Vehicle:</label>
+                <select id="vehicleSelect">
+                    <option value="">Select a vehicle</option>
+                    <% if (vehicles && vehicles.length > 0) { %>
+                        <% vehicles.forEach(vehicle => { %>
+                            <option value="<%= vehicle.id %>"><%= vehicle.name %></option>
+                        <% }); %>
+                    <% } %>
+                </select>
+
+                <div class="control-buttons">
+                    <button id="startSimulation" class="btn-primary" disabled>Start Movement</button>
+                    <button id="stopSimulation" class="btn-danger" disabled>Stop Movement</button>
+                </div>
+
+                <div class="simulation-settings">
+                    <label>
+                        Speed (km/h):
+                        <input type="number" id="simSpeed" value="60" min="10" max="120">
+                    </label>
+                    <label>
+                        Update Interval (ms):
+                        <input type="number" id="updateInterval" value="1000" min="100" max="5000">
+                    </label>
+                </div>
+            </div>
+
+            <div class="simulation-status">
+                <h3>Status</h3>
+                <p>Selected Vehicle: <span id="selectedVehicleName">None</span></p>
+                <p>Current Position: <span id="currentPos">Not set</span></p>
+                <p>Destination: <span id="destinationPos">Not set</span></p>
+                <p>Status: <span id="simStatus">Idle</span></p>
+            </div>
+
+            <div class="instructions">
+                <h4>Instructions:</h4>
+                <ol>
+                    <li>Select a vehicle from the dropdown</li>
+                    <li>Click on the map to set current position</li>
+                    <li>Click again to set destination</li>
+                    <li>Click "Start Movement" to simulate</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/simulator.js"></script>
+</body>
+</html>

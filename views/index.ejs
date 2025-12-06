@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Tracking System - Home</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1>Vehicle Tracking System</h1>
+            <div class="nav-links">
+                <a href="/" class="active">Home</a>
+                <a href="/simulator">Simulator</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="content-section">
+            <h2>Active Vehicles</h2>
+
+            <div class="vehicle-form">
+                <h3>Add New Vehicle</h3>
+                <form id="addVehicleForm">
+                    <input type="text" id="vehicleName" placeholder="Vehicle Name" required>
+                    <input type="text" id="driverName" placeholder="Driver Name">
+                    <input type="text" id="licensePlate" placeholder="License Plate">
+                    <button type="submit">Add Vehicle</button>
+                </form>
+            </div>
+
+            <div class="vehicles-list">
+                <% if (vehicles && vehicles.length > 0) { %>
+                    <% vehicles.forEach(vehicle => { %>
+                        <div class="vehicle-card" data-id="<%= vehicle.id %>">
+                            <div class="vehicle-info">
+                                <h3><%= vehicle.name %></h3>
+                                <p>Driver: <%= vehicle.driverName || 'N/A' %></p>
+                                <p>Plate: <%= vehicle.licensePlate || 'N/A' %></p>
+                                <% if (vehicle.destinationName) { %>
+                                    <p class="destination">Destination: <%= vehicle.destinationName %></p>
+                                <% } %>
+                            </div>
+                            <div class="vehicle-actions">
+                                <a href="/tracker/<%= vehicle.id %>" class="btn-primary">Track</a>
+                                <button class="btn-danger" onclick="deleteVehicle('<%= vehicle.id %>')">Delete</button>
+                            </div>
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                    <p class="no-vehicles">No vehicles available. Add one to get started!</p>
+                <% } %>
+            </div>
+        </div>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/home.js"></script>
+</body>
+</html>
